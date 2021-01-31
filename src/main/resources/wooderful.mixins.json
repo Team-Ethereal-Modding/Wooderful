@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "io.github.teamethereal.wooderful.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "BlockEntityTypeMixin",
+    "CartographyTableScreenHandlerMixin",
+    "CraftingScreenHandlerMixin",
+    "LoomScreenHandlerMixin",
+    "MixinBookOnLectern",
+    "SmithingTableScreenHandlerMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

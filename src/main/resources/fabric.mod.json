@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "wooderful",
+  "version": "${version}",
+  "name": "Wooderful",
+  "description": "Get overloaded with wood",
+  "authors": [
+    "Team Ethereal Modding"
+  ],
+  "contributors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/wooderful/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.teamethereal.wooderful.Wooderful"
+    ],
+    "client": [
+      "io.github.teamethereal.wooderful.client.WooderfulClient"
+    ],
+    "server": []
+  },
+  "mixins": [
+    "wooderful.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.1",
+    "fabric": "*"
+  }
+}
