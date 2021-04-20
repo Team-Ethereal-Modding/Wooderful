@@ -19,6 +19,9 @@ repositories {
 	jcenter()
 	maven{ url="https://jitpack.io" }
 	maven { url "https://dl.bintray.com/shedaniel/autoconfig1u/" }
+	maven {
+		url  "https://dl.bintray.com/natanfudge/libs"
+	}
 }
 
 dependencies {
