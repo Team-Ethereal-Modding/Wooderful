@@ -1,5 +1,7 @@
 package io.github.teamethereal.wooderful.block;
 
+import io.github.vampirestudios.vampirelib.utils.ItemStackUtils;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LecternBlock;
@@ -7,12 +9,14 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LecternBlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -108,6 +112,22 @@ public class WooderfulLectern extends LecternBlock {
         if (be instanceof LecternBlockEntity) {
             player.openHandledScreen((LecternBlockEntity)be);
             player.incrementStat(Stats.INTERACT_WITH_LECTERN);
+        }
+    }
+
+    @Override
+    public void addStacksForDisplay(ItemGroup group, DefaultedList<ItemStack> list) {
+        if(ItemStackUtils.isInGroup(this.asItem(), group)) {
+            if (FabricLoader.getInstance().isModLoaded("minecraft")) {
+                int targetIndex = ItemStackUtils.findIndexOfItem(Blocks.LECTERN.asItem(), list);
+                if(targetIndex != -1) {
+                    list.add(targetIndex + 1, new ItemStack(this));
+                } else {
+                    super.addStacksForDisplay(group, list);
+                }
+            } else {
+                super.addStacksForDisplay(group, list);
+            }
         }
     }
 

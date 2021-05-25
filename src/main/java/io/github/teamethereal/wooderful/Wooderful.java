@@ -6,9 +6,11 @@ import io.github.teamethereal.wooderful.block.entity.IBlockEntityType;
 import io.github.vampirestudios.vampirelib.utils.registry.RegistryHelper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +35,7 @@ public class Wooderful implements ModInitializer {
             .put(Blocks.BARREL, WoodType.SPRUCE)
             .put(Blocks.FLETCHING_TABLE, WoodType.BIRCH)
             .put(Blocks.CAMPFIRE, WoodType.OAK)
+            .put(Blocks.SOUL_CAMPFIRE, WoodType.OAK)
             .put(Blocks.BOOKSHELF, WoodType.OAK)
             .put(Blocks.LOOM, WoodType.OAK)
             .put(Blocks.COMPOSTER, WoodType.SPRUCE)
@@ -44,7 +47,7 @@ public class Wooderful implements ModInitializer {
         Arrays.asList(WoodType.VANILLA).forEach(woodType -> {
             if (VANILLA_BLOCKS.get(Blocks.CRAFTING_TABLE) != woodType) REGISTRY_HELPER.registerBlock(new WooderfulCraftingTable(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE)), woodType.getIdentifier().getPath() + "_crafting_table");
             if (VANILLA_BLOCKS.get(Blocks.LECTERN) != woodType)  {
-                Block lectern = REGISTRY_HELPER.registerBlock(new WooderfulLectern(), woodType.getIdentifier().getPath() + "_lectern");
+                Block lectern = REGISTRY_HELPER.registerBlock(new WooderfulLectern(), woodType.getIdentifier().getPath() + "_lectern", ItemGroup.REDSTONE);
                 ((IBlockEntityType) BlockEntityType.LECTERN).wooderful_addBlocks(lectern);
             }
             if (VANILLA_BLOCKS.get(Blocks.LOOM) != woodType) REGISTRY_HELPER.registerBlock(new WooderfulLoom(FabricBlockSettings.copyOf(Blocks.LOOM)), woodType.getIdentifier().getPath() + "_loom");
@@ -53,11 +56,12 @@ public class Wooderful implements ModInitializer {
             if (VANILLA_BLOCKS.get(Blocks.CARTOGRAPHY_TABLE) != woodType) REGISTRY_HELPER.registerBlock(new WooderfulCartographyTable(FabricBlockSettings.copyOf(Blocks.CARTOGRAPHY_TABLE)), woodType.getIdentifier().getPath() + "_cartography_table");
 //            if (VANILLA_BLOCKS.get(Blocks.BOOKSHELF) != woodType) REGISTRY_HELPER.registerBlock(new Block(FabricBlockSettings.copyOf(Blocks.BOOKSHELF)), woodType.getIdentifier().getPath() + "_bookshelf");
 //            if (VANILLA_BLOCKS.get(Blocks.COMPOSTER) != woodType) REGISTRY_HELPER.registerBlock(new ComposterBlock(FabricBlockSettings.copyOf(Blocks.COMPOSTER)), woodType.getIdentifier().getPath() + "_composter");
-//            if (VANILLA_BLOCKS.get(Blocks.CAMPFIRE) != woodType) REGISTRY_HELPER.registerBlock(new CampfireBlock(true, 1, FabricBlockSettings.copyOf(Blocks.CAMPFIRE)), woodType.getIdentifier().getPath() + "_campfire");
-//            if (VANILLA_BLOCKS.get(Blocks.BARREL) != woodType) {
-//                Block barrel = REGISTRY_HELPER.registerBlock(new BarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL)), woodType.getIdentifier().getPath() + "_barrel");
-//                ((IBlockEntityType) BlockEntityType.BARREL).wooderful_addBlocks(barrel);
-//            }
+            if (VANILLA_BLOCKS.get(Blocks.CAMPFIRE) != woodType) REGISTRY_HELPER.registerBlock(new WooderfulCampfire(false, FabricBlockSettings.copyOf(Blocks.CAMPFIRE)), woodType.getIdentifier().getPath() + "_campfire");
+            if (VANILLA_BLOCKS.get(Blocks.SOUL_CAMPFIRE) != woodType) REGISTRY_HELPER.registerBlock(new WooderfulCampfire(true, FabricBlockSettings.copyOf(Blocks.SOUL_CAMPFIRE)), woodType.getIdentifier().getPath() + "_soul_campfire");
+            if (VANILLA_BLOCKS.get(Blocks.BARREL) != woodType) {
+                Block barrel = REGISTRY_HELPER.registerBlock(new BarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL)), woodType.getIdentifier().getPath() + "_barrel");
+                ((IBlockEntityType) BlockEntityType.BARREL).wooderful_addBlocks(barrel);
+            }
         });
     }
 

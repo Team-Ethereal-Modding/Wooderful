@@ -1,7 +1,9 @@
 package io.github.teamethereal.wooderful.client;
 
 import com.swordglowsblue.artifice.api.Artifice;
+import com.swordglowsblue.artifice.api.resource.StringResource;
 import io.github.teamethereal.wooderful.WoodType;
+import io.github.vampirestudios.vampirelib.utils.ArtificeGenerationHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.util.Identifier;
 
@@ -128,6 +130,77 @@ public class WooderfulClient implements ClientModInitializer {
 			});
 			clientResourcePackBuilder.addItemModel(id(String.format("%s_loom", woodType.getIdentifier().getPath())), modelBuilder ->
 					modelBuilder.parent(id(String.format("block/%s_loom", woodType.getIdentifier().getPath()))));
+
+			String template = "{\n" +
+					"  \"variants\": {\n" +
+					"    \"facing=down,open=false\": {\n" +
+					"      \"x\": 180,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel\"\n" +
+					"    },\n" +
+					"    \"facing=down,open=true\": {\n" +
+					"      \"x\": 180,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel_open\"\n" +
+					"    },\n" +
+					"    \"facing=east,open=false\": {\n" +
+					"      \"x\": 90,\n" +
+					"      \"y\": 90,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel\"\n" +
+					"    },\n" +
+					"    \"facing=east,open=true\": {\n" +
+					"      \"x\": 90,\n" +
+					"      \"y\": 90,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel_open\"\n" +
+					"    },\n" +
+					"    \"facing=north,open=false\": {\n" +
+					"      \"x\": 90,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel\"\n" +
+					"    },\n" +
+					"    \"facing=north,open=true\": {\n" +
+					"      \"x\": 90,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel_open\"\n" +
+					"    },\n" +
+					"    \"facing=south,open=false\": {\n" +
+					"      \"x\": 90,\n" +
+					"      \"y\": 180,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel\"\n" +
+					"    },\n" +
+					"    \"facing=south,open=true\": {\n" +
+					"      \"x\": 90,\n" +
+					"      \"y\": 180,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel_open\"\n" +
+					"    },\n" +
+					"    \"facing=up,open=false\": {\n" +
+					"      \"model\": \"wooderful:block/%s_barrel\"\n" +
+					"    },\n" +
+					"    \"facing=up,open=true\": {\n" +
+					"      \"model\": \"wooderful:block/%s_barrel_open\"\n" +
+					"    },\n" +
+					"    \"facing=west,open=false\": {\n" +
+					"      \"x\": 90,\n" +
+					"      \"y\": 270,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel\"\n" +
+					"    },\n" +
+					"    \"facing=west,open=true\": {\n" +
+					"      \"x\": 90,\n" +
+					"      \"y\": 270,\n" +
+					"      \"model\": \"wooderful:block/%s_barrel_open\"\n" +
+					"    }\n" +
+					"  }\n" +
+					"}";
+
+			clientResourcePackBuilder.add(id(String.format("blockstates/%s_barrel", woodType.getIdentifier().getPath())), new StringResource(template.replace("%s", woodType.getIdentifier().getPath())));
+
+			ArtificeGenerationHelper.generateTopBottomBlockModel(clientResourcePackBuilder,
+					id(String.format("%s_barrel", woodType.getIdentifier().getPath())),
+					id(String.format("block/barrel/%s/top_closed", woodType.getIdentifier().getPath())),
+					id(String.format("block/barrel/%s/bottom", woodType.getIdentifier().getPath())),
+					id(String.format("block/barrel/%s/side", woodType.getIdentifier().getPath())));
+
+			ArtificeGenerationHelper.generateTopBottomBlockModel(clientResourcePackBuilder,
+					id(String.format("%s_barrel_open", woodType.getIdentifier().getPath())),
+					id(String.format("block/barrel/%s/top_open", woodType.getIdentifier().getPath())),
+					id(String.format("block/barrel/%s/bottom", woodType.getIdentifier().getPath())),
+					id(String.format("block/barrel/%s/side", woodType.getIdentifier().getPath())));
 		}));
 	}
 }
