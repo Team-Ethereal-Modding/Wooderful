@@ -1,10 +1,21 @@
 pluginManagement {
     repositories {
-        jcenter()
+        gradlePluginPortal()
         maven {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
-        gradlePluginPortal()
+        maven {
+            name = 'Sponge Snapshots'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+        maven { url = "https://maven.quiltmc.org/repository/release" }
+        maven {
+            name = 'Cotton'
+            url = 'https://server.bbkr.space/artifactory/libs-release/'
+        }
     }
 }
+
+rootProject.name = 'Wooderful'
+include(":Common", ":Fabric", ":Forge", ":Quilt")

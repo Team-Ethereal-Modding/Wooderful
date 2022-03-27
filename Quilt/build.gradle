@@ -1,0 +1,100 @@
+plugins {
+	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'io.github.juuxel.loom-quiltflower' version '1.6.0' // For loom 0.8-0.9, 0.11+
+	id "org.quiltmc.quilt-mappings-on-loom" version "4.0.0"
+    id 'maven-publish'
+    id 'idea'
+}
+
+archivesBaseName = "${mod_name}-quilt-${minecraft_version}"
+version = project.mod_version + "+" + "build." + project.build_number + "-" + project.minecraft_version
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.layered {
+        it.addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:${quilt_mappings}:v2"))
+        it.officialMojangMappings {
+            setNameSyntheticMembers(false)
+        }
+    }
+    modImplementation "org.quiltmc:quilt-loader:${quilt_loader_version}"
+    modImplementation "org.quiltmc.qsl:qsl:${quilt_version}-SNAPSHOT"
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    implementation project(":Common")
+}
+
+loom {
+    runs {
+        client {
+            client()
+            setConfigName("Quilt Client")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        server {
+            server()
+            setConfigName("Quilt Server")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        dataClient {
+            client()
+            setConfigName("Quilt Client Datagen")
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.existing-dir=${file("src/main/resources")}")
+            vmArg("-Dfabric-api.datagen.modid=${project.mod_id}")
+            vmArg("-Dfabric-api.datagen.strict_validation=false")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        dataServer {
+            server()
+            setConfigName("Quilt Server Datagen")
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.existing-dir=${file("src/main/resources")}")
+            vmArg("-Dfabric-api.datagen.modid=${project.mod_id}")
+            vmArg("-Dfabric-api.datagen.strict_validation=false")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+    }
+}
+
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+    inputs.property "version", project.version
+
+    filesMatching("quilt.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile) {
+    source(project(":Common").sourceSets.main.allSource)
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${mod_name}" }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url "file://" + System.getenv("local_maven")
+        }
+    }
+}

@@ -1,8 +1,8 @@
-package io.github.teamethereal.wooderful;
+package com.example.examplemod;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public class WoodType {
 	public static final WoodType SPRUCE = WoodTypeRegistry.registerVanilla(new WoodType("spruce", Blocks.SPRUCE_PLANKS));
@@ -15,28 +15,28 @@ public class WoodType {
 	public static final WoodType CRIMSON = WoodTypeRegistry.registerVanilla(new WoodType("crimson", Blocks.CRIMSON_PLANKS));
 	public static final WoodType[] VANILLA = new WoodType[]{OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARK_OAK, WARPED, CRIMSON};
 
-	protected Identifier identifier;
+	protected ResourceLocation identifier;
 	public Block baseBlock;
 
-	public WoodType(Identifier identifier) {
+	public WoodType(ResourceLocation identifier) {
 		this(identifier, Blocks.AIR);
 	}
 
 	public WoodType(String name, Block baseBlock) {
-		this(new Identifier("minecraft", name), baseBlock);
+		this(new ResourceLocation("minecraft", name), baseBlock);
 	}
 
-	public WoodType(Identifier identifier, Block baseBlock) {
+	public WoodType(ResourceLocation identifier, Block baseBlock) {
 		this.identifier = identifier;
 		this.baseBlock = baseBlock;
 	}
 
-	public Identifier getIdentifier() {
+	public ResourceLocation getIdentifier() {
 		return identifier;
 	}
 
-	public Identifier getBaseBlockIdentifier() {
-		return new Identifier(identifier.getNamespace(), identifier.getPath() + "_planks");
+	public ResourceLocation getBaseBlockIdentifier() {
+		return new ResourceLocation(identifier.getNamespace(), identifier.getPath() + "_planks");
 	}
 
 	public Block getBaseBlock() {

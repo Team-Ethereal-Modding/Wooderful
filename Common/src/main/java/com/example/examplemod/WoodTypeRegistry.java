@@ -1,12 +1,12 @@
-package io.github.teamethereal.wooderful;
+package com.example.examplemod;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public abstract class WoodTypeRegistry implements StringIdentifiable {
+public abstract class WoodTypeRegistry implements StringRepresentable {
     public static ArrayList<WoodType> woodTypes = new ArrayList<>();
 
     private static Queue<ModdedTypeListener> listeners = new ConcurrentLinkedQueue<>();

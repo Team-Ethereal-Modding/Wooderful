@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.example.examplemod.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+	"BlockEntityTypeMixin",
+	"ItemInvokerMixin",
+	"CartographyTableScreenHandlerMixin",
+	"CraftingScreenHandlerMixin",
+	"LoomScreenHandlerMixin",
+	"MixinBookOnLectern",
+	"SmithingTableScreenHandlerMixin"
+  ],
+  "client": [
+	"ExampleMixin"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
+}
+  
